@@ -54,6 +54,13 @@ function my_custom_dropdown_content() {
 add_action('mymenu_after_dropdown_content', 'my_custom_dropdown_content');
 ```
 
+## Customization
+
+Currently you can customize the display using css. don't worry it's not complicated.
+Main CLASSES:
+
+MAIN DIV: <code>profile-dropdown-wrapper</code>
+
 ### TODO
 
 - [ ] Language loaclization
