@@ -57,9 +57,18 @@ add_action('mymenu_after_dropdown_content', 'my_custom_dropdown_content');
 ## Customization
 
 Currently you can customize the display using css. don't worry it's not complicated.
+
 Main CLASSES:
 
-MAIN DIV: <code>profile-dropdown-wrapper</code>
+- MAIN DIV: <code>profile-dropdown-wrapper</code>
+- MAIN Monogram <code>user-monogram</code>
+- MIAN Nickname <code> user-nickname </code>
+
+MAIN CLASSES IN THE DROPDOWN
+
+- MAIN WRAPPER <code>dropdown-content</code>
+- HEADER section <code>dropdown-header</code>
+- DROPDOWN Content <code>dropdown-menu-content</code>
 
 ### TODO
 
