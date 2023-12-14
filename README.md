@@ -11,6 +11,8 @@ This plugin provides a shortcode, a few tweaks, a monogram creation, and a dropd
 * Third, go to your header (best option to place the shortcode in the header). open your editor, like elementor Brick etc.. Place the following shortcode: **[user_monogram]**
 * Done!
 
+![image](https://github.com/Lonsdale201/wp-mymenu/assets/23199033/43d26cda-ac60-4b38-abcd-90e5a74e4106)
+
 
 ## HOW IT WORK
 
