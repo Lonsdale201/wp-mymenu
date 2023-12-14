@@ -72,6 +72,12 @@ MAIN CLASSES IN THE DROPDOWN
 - HEADER section <code>dropdown-header</code>
 - DROPDOWN Content <code>dropdown-menu-content</code>
 
+### TESTED
+
+Php 8.1
+WP 6.4.2
+Accessibility
+
 ### TODO
 
 - [ ] Language loaclization
