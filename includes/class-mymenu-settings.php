@@ -4,9 +4,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class MyMenu_Settings {
-    public function __construct() {
+    private static $instance = null;
+
+    private function __construct() {
         add_action( 'admin_menu', array( $this, 'add_settings_page' ) );
         add_action( 'admin_init', array( $this, 'initialize_settings' ) );
+    }
+
+    public static function get_instance() {
+        if ( null === self::$instance ) {
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
 
     public function add_settings_page() {
@@ -45,6 +54,16 @@ class MyMenu_Settings {
             'mymenu_redirect_url'
         );
 
+        register_setting(
+            'mymenu_settings_group', 
+            'mymenu_before_dropdown_content'
+        );
+        
+        register_setting(
+            'mymenu_settings_group', 
+            'mymenu_after_dropdown_content'
+        );    
+
         add_settings_section(
             'mymenu_settings_section', 
             'Main Settings',           
@@ -68,7 +87,21 @@ class MyMenu_Settings {
             'mymenu_settings_section'  
         );
 
+        add_settings_field(
+            'mymenu_before_dropdown_content',      
+            'Insert shortcode before dropdown menu content',             
+            array( $this, 'before_dropdown_content_callback' ), 
+            'mymenu-settings',         
+            'mymenu_settings_section'  
+        );
 
+        add_settings_field(
+            'mymenu_after_dropdown_content',      
+            'Insert shortcode after dropdown menu content',             
+            array( $this, 'after_dropdown_content_callback' ), 
+            'mymenu-settings',         
+            'mymenu_settings_section'  
+        );
        
     }
 
@@ -86,7 +119,17 @@ class MyMenu_Settings {
         $redirect_url = get_option('mymenu_redirect_url');
         echo '<input type="url" name="mymenu_redirect_url" value="' . esc_attr($redirect_url) . '" placeholder="https://example.com">';
     }
+
+    public function before_dropdown_content_callback() {
+        $content = get_option('mymenu_before_dropdown_content');
+        echo '<textarea name="mymenu_before_dropdown_content">' . esc_textarea($content) . '</textarea>';
+    }
+    
+    public function after_dropdown_content_callback() {
+        $content = get_option('mymenu_after_dropdown_content');
+        echo '<textarea name="mymenu_after_dropdown_content">' . esc_textarea($content) . '</textarea>';
+    }
     
 }
 
-new MyMenu_Settings();
+MyMenu_Settings::get_instance();
