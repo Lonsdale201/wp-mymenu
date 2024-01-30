@@ -29,15 +29,23 @@ For menus, you can specify the following options for each menu item, not just th
 * Show only to logged out or logged in users
 * Only if you have a subscription (Woo Subscriptions)
 * If you are an Affiliate partner (AffiliateWP)
+* Show for the selected Woo Membership plans (multiple + relation support)
 
 > [!IMPORTANT]
 > These settings only hide the menu item, but still if someone has the link they can view the page.
+
+### Compatibiliy plugins
+
+* Woo Membership
+* Woo Subscriptions
+* AffiliateWP
 
 ## For Developers
 
 Monograme meta key: **hw_monogram**
 
 Add content before or after the dropdown menu:
+(now this can done via the mymenu settings / with shortcode)
 
 Example 1
 ```
@@ -75,7 +83,7 @@ MAIN CLASSES IN THE DROPDOWN
 ### TESTED
 
 Php 8.1
-WP 6.4.3
+WP 6.4.4
 Accessibility
 
 ### TODO
