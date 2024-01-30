@@ -75,7 +75,7 @@ MAIN CLASSES IN THE DROPDOWN
 ### TESTED
 
 Php 8.1
-WP 6.4.2
+WP 6.4.3
 Accessibility
 
 ### TODO
@@ -83,5 +83,13 @@ Accessibility
 - [ ] Language loaclization
 - [ ] Role-based display condition
 - [ ] Monogram regeneration manually
+
+## CHANGELOG
+
+### V 2.0 - 2024.01.31
+
+* NEW Membership compatibility for the Wp Navmenu visibility (multiple and relation support)
+* NEW Two new settings: Insert shortcode before dropdown menu content and Insert shortcode after dropdown menu content - now you can add shortcode before and after the dropdown content. 
+* TWEAK some code refactored
 
 
