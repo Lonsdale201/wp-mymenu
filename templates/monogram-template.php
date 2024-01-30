@@ -13,14 +13,20 @@
             </div>
         </div>
         <div class="dropdown-menu-content">
-            <?php do_action('mymenu_before_dropdown_content'); ?>
+            <?php
+            echo do_shortcode(get_option('mymenu_before_dropdown_content'));
+            do_action('mymenu_before_dropdown_content');
+            ?>
 
             <?php echo wp_nav_menu(array(
                 'theme_location' => 'dropdown-profile-menu',
                 'echo' => false,
             )); ?>
 
-            <?php do_action('mymenu_after_dropdown_content'); ?>
+            <?php
+            echo do_shortcode(get_option('mymenu_after_dropdown_content'));
+            do_action('mymenu_after_dropdown_content');
+            ?>
         </div>
     </div>
 </div>
