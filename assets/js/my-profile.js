@@ -20,29 +20,37 @@ jQuery(document).ready(function($) {
         }
     }
 
-    function openDropdown(dropdown, wrapper) {
-        dropdown.css({
-            display: 'block',
-            opacity: 0,
-            transform: 'translateY(10px) translateX(-50%)'
-        });
+   function openDropdown(dropdown, wrapper) {
+    dropdown.css({
+        display: 'block',
+        opacity: 0,
+        transform: 'translateY(10px) translateX(-50%)'
+    });
 
-        var dropdownWidth = dropdown.outerWidth();
-        var dropdownOffsetLeft = wrapper.offset().left;
+    var dropdownOffset = dropdown.offset().left;
+    var dropdownWidth = dropdown.outerWidth();
+    var windowWidth = $(window).width();
+    var defaultShift = 10; // default
 
-        var windowWidth = $(window).width();
-        if ((dropdownOffsetLeft + dropdownWidth) > windowWidth) {
-            var shiftAmount = (dropdownOffsetLeft + dropdownWidth) - windowWidth + 10;
-            dropdown.css('left', -shiftAmount);
-        }
-
-        setTimeout(function() {
-            dropdown.css({
-                opacity: 1,
-                transform: 'translateY(0px) translateX(-50%)'
-            });
-        }, 10);
+    if (dropdownOffset + dropdownWidth > windowWidth) {
+        var shiftAmount = (dropdownOffset + dropdownWidth) - windowWidth + defaultShift;
+        dropdown.css('left', (parseInt(dropdown.css('left')) - shiftAmount) + 'px');
+    } else if (dropdownOffset < 0) {
+        dropdown.css('left', (parseInt(dropdown.css('left')) - dropdownOffset) + 'px');
+    } else {
+        dropdown.css('left', (parseInt(dropdown.css('left')) - defaultShift) + 'px');
     }
+
+    setTimeout(function() {
+        dropdown.css({
+            opacity: 1,
+            transform: 'translateY(0px) translateX(-50%)'
+        });
+    }, 10);
+}
+
+
+
 
     function closeDropdown(dropdown) {
         dropdown.css({
