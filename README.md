@@ -96,8 +96,9 @@ Accessibility
 
 ### V 2.0 - 2024.01.31
 
-* NEW Membership compatibility for the Wp Navmenu visibility (multiple and relation support)
-* NEW Two new settings: Insert shortcode before dropdown menu content and Insert shortcode after dropdown menu content - now you can add shortcode before and after the dropdown content. 
-* TWEAK some code refactored
+* **NEW** Membership compatibility for the Wp Navmenu visibility (multiple and relation support)
+* **NEW** Two new settings: Insert shortcode before dropdown menu content and Insert shortcode after dropdown menu content - now you can add shortcode before and after the dropdown content. 
+* **TWEAK** some code refactored
+* **BUGFIX** Fixed the bad dropdown calculations
 
 
