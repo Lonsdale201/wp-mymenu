@@ -94,6 +94,12 @@ Accessibility
 
 ## CHANGELOG
 
+### V 2.1 - 2024.02.17
+
+* **TWEAK** Code refactored
+* **FIX** Fixed some bugs with the third party settings. (AffiliateWp, Woo Subs, and Woo memberships visibility)
+* **NEW** Plugin added to the updater server. 
+
 ### V 2.0 - 2024.01.31
 
 * **NEW** Membership compatibility for the Wp Navmenu visibility (multiple and relation support)
