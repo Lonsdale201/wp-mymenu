@@ -12,6 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; 
 }
 
+require dirname(__FILE__) . '/plugin-update-checker/plugin-update-checker.php';
+
+use YahnisElsts\PluginUpdateChecker\v5p0\PucFactory;
 
 define('MPM_PATH', plugin_dir_path(__FILE__));
 define('MPM_URL', plugin_dir_url(__FILE__));
@@ -26,6 +29,11 @@ function mpm_enqueue_assets() {
 }
 add_action('wp_enqueue_scripts', 'mpm_enqueue_assets');
 
+$myUpdateChecker = PucFactory::buildUpdateChecker(
+    'https://plugin-uodater.alex.hellodevs.dev/plugins/wp-mymenu-main.json',
+    __FILE__,
+    'wp-mymenu-main'
+);
 
 function mpm_register_menu() {
     register_nav_menu('dropdown-profile-menu', __('DropDown Profile Menu', 'my-profile-menu'));
