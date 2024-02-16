@@ -34,7 +34,7 @@ class Menu_Extensions {
             <p class="description description-wide">
                 <label for="edit-menu-item-affiliate-only-<?php echo $item_id; ?>">
                     <input type="checkbox" id="edit-menu-item-affiliate-only-<?php echo $item_id; ?>" name="menu-item-affiliate-only[<?php echo $item_id; ?>]" <?php checked($field_value, 'yes'); ?> />
-                    <?php _e('Csak Affiliate Bejelentkezett Partnereknek', 'my-profile-menu'); ?>
+                    <?php _e('Affiliate Partner Only (AffiliateWP)', 'my-profile-menu'); ?>
                 </label>
             </p>
             <?php
@@ -46,7 +46,7 @@ class Menu_Extensions {
             <p class="description description-wide">
                 <label for="edit-menu-item-has-active-subscription-<?php echo $item_id; ?>">
                     <input type="checkbox" id="edit-menu-item-has-active-subscription-<?php echo $item_id; ?>" name="menu-item-has-active-subscription[<?php echo $item_id; ?>]" <?php checked($has_active_subscription_value, 'yes'); ?> />
-                    <?php _e('Ha van aktív előfizetés', 'my-profile-menu'); ?>
+                    <?php _e('Only if user have active subscriptons(Woo Subscriptions)', 'my-profile-menu'); ?>
                 </label>
             </p>
             <?php
@@ -55,18 +55,18 @@ class Menu_Extensions {
         $visibility_value = get_post_meta($item_id, '_mpm_visibility', true);
         ?>
         <p class="description description-wide">
-            <label><strong><?php _e('Menü Elem Láthatósága', 'my-profile-menu'); ?></strong></label><br>
+            <label><strong><?php _e('Menu visibility', 'my-profile-menu'); ?></strong></label><br>
             <label for="edit-menu-item-visibility-any-<?php echo $item_id; ?>">
                 <input type="radio" id="edit-menu-item-visibility-any-<?php echo $item_id; ?>" name="menu-item-visibility[<?php echo $item_id; ?>]" value="any" <?php checked($visibility_value, 'any', true); ?> />
-                <?php _e('Bárki', 'my-profile-menu'); ?>
+                <?php _e('Anybody', 'my-profile-menu'); ?>
             </label><br>
             <label for="edit-menu-item-visibility-logged-in-<?php echo $item_id; ?>">
                 <input type="radio" id="edit-menu-item-visibility-logged-in-<?php echo $item_id; ?>" name="menu-item-visibility[<?php echo $item_id; ?>]" value="logged_in" <?php checked($visibility_value, 'logged_in'); ?> />
-                <?php _e('Bejelentkezett', 'my-profile-menu'); ?>
+                <?php _e('Logged-in', 'my-profile-menu'); ?>
             </label><br>
             <label for="edit-menu-item-visibility-logged-out-<?php echo $item_id; ?>">
                 <input type="radio" id="edit-menu-item-visibility-logged-out-<?php echo $item_id; ?>" name="menu-item-visibility[<?php echo $item_id; ?>]" value="logged_out" <?php checked($visibility_value, 'logged_out'); ?> />
-                <?php _e('Kijelentkezett', 'my-profile-menu'); ?>
+                <?php _e('Logged-out', 'my-profile-menu'); ?>
             </label>
         </p>
         <?php
@@ -78,7 +78,7 @@ class Menu_Extensions {
             ?>
             <p class="description description-wide">
                 <label for="edit-menu-item-membership-<?php echo $item_id; ?>">
-                    <?php _e('Tagságok', 'my-profile-menu'); ?>
+                    <?php _e('Woo Memberships', 'my-profile-menu'); ?>
                 </label>
                 <select class="mpm-select2" multiple="multiple" id="edit-menu-item-membership-<?php echo $item_id; ?>" name="menu-item-membership[<?php echo $item_id; ?>][]">
                     <?php foreach ($memberships as $membership): ?>
@@ -93,11 +93,11 @@ class Menu_Extensions {
                 <label><strong><?php _e('Membership Relation', 'my-profile-menu'); ?></strong></label><br>
                 <label for="membership-relation-and-<?php echo $item_id; ?>">
                     <input type="radio" id="membership-relation-and-<?php echo $item_id; ?>" name="menu-item-membership-relation[<?php echo $item_id; ?>]" value="AND" <?php checked($membership_relation, 'AND', true); ?> />
-                    <?php _e('ÉS', 'my-profile-menu'); ?>
+                    <?php _e('AND', 'my-profile-menu'); ?>
                 </label><br>
                 <label for="membership-relation-or-<?php echo $item_id; ?>">
                     <input type="radio" id="membership-relation-or-<?php echo $item_id; ?>" name="menu-item-membership-relation[<?php echo $item_id; ?>]" value="OR" <?php checked($membership_relation, 'OR'); ?> />
-                    <?php _e('VAGY', 'my-profile-menu'); ?>
+                    <?php _e('OR', 'my-profile-menu'); ?>
                 </label>
             </p>
             <script type="text/javascript">
@@ -140,98 +140,122 @@ class Menu_Extensions {
     }
 
     public function filter_nav_menu_items($menu_items, $args) {
-        if (!empty($menu_items)) {
-            $menu_item_ids = wp_list_pluck($menu_items, 'ID');
-            $meta_query = [
-                'relation' => 'OR',
-                ['key' => '_mpm_affiliate_only'],
-                ['key' => '_mpm_visibility'],
-                ['key' => '_mpm_has_active_subscription'],
-                ['key' => '_mpm_membership']
+        if (empty($menu_items)) {
+            return $menu_items;
+        }
+    
+        $menu_item_ids = wp_list_pluck($menu_items, 'ID');
+        $meta_query = [
+            'relation' => 'OR',
+            ['key' => '_mpm_affiliate_only'],
+            ['key' => '_mpm_visibility'],
+            ['key' => '_mpm_has_active_subscription'],
+            ['key' => '_mpm_membership']
+        ];
+        $meta_results = new WP_Query([
+            'post_type' => 'nav_menu_item',
+            'posts_per_page' => -1,
+            'post__in' => $menu_item_ids,
+            'fields' => 'ids',
+            'meta_query' => $meta_query
+        ]);
+    
+        $menu_item_metas = [];
+        foreach ($meta_results->posts as $post_id) {
+            $menu_item_metas[$post_id] = [
+                'affiliate_only' => get_post_meta($post_id, '_mpm_affiliate_only', true),
+                'visibility' => get_post_meta($post_id, '_mpm_visibility', true),
+                'has_active_subscription' => get_post_meta($post_id, '_mpm_has_active_subscription', true),
+                'membership' => get_post_meta($post_id, '_mpm_membership', true)
             ];
-            $meta_results = new WP_Query([
-                'post_type' => 'nav_menu_item',
-                'posts_per_page' => -1,
-                'post__in' => $menu_item_ids,
-                'fields' => 'ids',
-                'meta_query' => $meta_query
-            ]);
-            $menu_item_metas = [];
-            foreach ($meta_results->posts as $post_id) {
-                $menu_item_metas[$post_id] = [
-                    'affiliate_only' => get_post_meta($post_id, '_mpm_affiliate_only', true),
-                    'visibility' => get_post_meta($post_id, '_mpm_visibility', true),
-                    'has_active_subscription' => get_post_meta($post_id, '_mpm_has_active_subscription', true),
-                    'membership' => get_post_meta($post_id, '_mpm_membership', true)
-                ];
+        }
+    
+        $user = wp_get_current_user();
+        $is_affiliate = $this->is_affiliatewp_active() && affwp_is_affiliate($user->ID);
+    
+        foreach ($menu_items as $key => $menu_item) {
+            $meta = $menu_item_metas[$menu_item->ID] ?? null;
+            if (!$meta) {
+                continue;
+            }
+
+            if ($meta['affiliate_only'] === 'yes' && !$this->is_affiliatewp_active()) {
+                continue;
+            }
+    
+    
+            $has_valid_subscription = $this->check_subscription_status($user, $meta['has_active_subscription']);
+            $has_membership = $this->check_membership_status($user, $meta['membership'], $menu_item->ID);
+    
+
+            if ($this->should_remove_menu_item($meta, $is_affiliate, $has_valid_subscription, $has_membership)) {
+                unset($menu_items[$key]);
             }
         }
     
-        if (is_user_logged_in()) {
-            $user = wp_get_current_user();
-            $is_affiliate = $this->is_affiliatewp_active() ? affwp_is_affiliate($user->ID) : false;
-    
-            foreach ($menu_items as $key => $menu_item) {
-                $meta = $menu_item_metas[$menu_item->ID] ?? null;
-                if (!$meta) continue;
-    
-                $is_affiliate_only = $meta['affiliate_only'];
-                $visibility = $meta['visibility'];
-                $has_active_subscription = $meta['has_active_subscription'];
-                $membership_ids = $meta['membership'] ?? [];
-    
-                $has_valid_subscription = false;
-                if ($has_active_subscription == 'yes' && $this->is_woocommerce_subscriptions_active()) {
-                    $user_subscriptions = wcs_get_users_subscriptions($user->ID);
-                    foreach ($user_subscriptions as $subscription) {
-                        if ($subscription->has_status('active')) {
-                            $has_valid_subscription = true;
-                            break;
-                        }
-                    }
-                }
-    
-                $membership_relation = get_post_meta($menu_item->ID, '_mpm_membership_relation', true) ?: 'AND';
-
-                $has_membership = ($membership_relation == 'AND') ? true : false;
-                foreach ($membership_ids as $membership_id) {
-                    $is_member = wc_memberships_is_user_member($user->ID, $membership_id);
-
-                    if ($membership_relation == 'AND' && !$is_member) {
-                        $has_membership = false;
-                        break;
-                    } elseif ($membership_relation == 'OR' && $is_member) {
-                        $has_membership = true;
-                        break;
-                    }
-                }
-
-                if (($is_affiliate_only == 'yes' && !$is_affiliate) || 
-                    ($visibility == 'logged_in' && !is_user_logged_in()) || 
-                    ($visibility == 'logged_out' && is_user_logged_in()) || 
-                    ($has_active_subscription == 'yes' && !$has_valid_subscription) ||
-                    (!empty($membership_ids) && !$has_membership)) {
-                    unset($menu_items[$key]);
-                }
-            }
-        } else {
-            foreach ($menu_items as $key => $menu_item) {
-                $meta = $menu_item_metas[$menu_item->ID] ?? null;
-                if (!$meta) continue;
-    
-                $visibility = $meta['visibility'];
-                $has_active_subscription = $meta['has_active_subscription'];
-                $membership_ids = $meta['membership'] ?? [];
-    
-                if (($visibility == 'logged_in') || 
-                    ($has_active_subscription == 'yes') ||
-                    (!empty($membership_ids))) {
-                    unset($menu_items[$key]);
-                }
-            }
-        }
         return $menu_items;
     }
+    
+    private function check_subscription_status($user, $has_active_subscription) {
+        if ($has_active_subscription !== 'yes' || !$this->is_woocommerce_subscriptions_active()) {
+            return false;
+        }
+        $user_subscriptions = wcs_get_users_subscriptions($user->ID);
+        foreach ($user_subscriptions as $subscription) {
+            if ($subscription->has_status('active')) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private function check_membership_status($user, $membership_ids, $menu_item_id) {
+        if (empty($membership_ids) || !$this->is_woocommerce_membership_active()) {
+            return true; 
+        }
+    
+        $membership_relation = get_post_meta($menu_item_id, '_mpm_membership_relation', true) ?: 'AND';
+        foreach ($membership_ids as $membership_id) {
+            $is_member = wc_memberships_is_user_member($user->ID, $membership_id);
+            if ($membership_relation === 'AND' && !$is_member) {
+                return false;
+            } elseif ($membership_relation === 'OR' && $is_member) {
+                return true;
+            }
+        }
+    
+        return $membership_relation === 'AND';
+    }
+    
+    private function should_remove_menu_item($meta, $is_affiliate, $has_valid_subscription, $has_membership) {
+       
+        if ($meta['affiliate_only'] === 'yes' && !$this->is_affiliatewp_active() && !$is_affiliate) {
+            return false; 
+        }
+    
+        if ($meta['has_active_subscription'] === 'yes' && !$this->is_woocommerce_subscriptions_active() && !$has_valid_subscription) {
+            return false; 
+        }
+    
+        if ($meta['visibility'] === 'logged_in' && !is_user_logged_in()) {
+            return true;
+        }
+    
+        if ($meta['visibility'] === 'logged_out' && is_user_logged_in()) {
+            return true;
+        }
+    
+        if ($meta['has_active_subscription'] === 'yes' && !$has_valid_subscription) {
+            return true;
+        }
+    
+        if (!$has_membership) {
+            return true;
+        }
+    
+        return false;
+    }
+    
     
 
     private function is_affiliatewp_active() {
