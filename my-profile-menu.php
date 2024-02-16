@@ -3,7 +3,7 @@
 Plugin Name: HelloWP! | My Profile Menu
 Plugin URI: https://github.com/Lonsdale201/wp-mymenu
 Description: MyAccount Dropdown menu and extras.
-Version: 2.0
+Version: 2.1
 Author: Soczó Kristóf
 Author URI: https://hellowp.io/hu/
 */
