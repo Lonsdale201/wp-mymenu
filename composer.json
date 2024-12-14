@@ -1,0 +1,30 @@
+{
+    "name": "hellowp/wp-mymenu",
+    "description": "MyAccount Dropdown menu and some extras.",
+    "type": "wordpress-plugin",
+    "require": {
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "HelloWP\\HWMyMenu\\App\\": "app/",
+            "HelloWP\\HWMyMenu\\App\\Admin\\": "app/admin",
+            "HelloWP\\HWMyMenu\\App\\Frontend\\": "app/frontend",
+            "HelloWP\\HWMyMenu\\App\\Helper\\": "app/helper",
+            "HelloWP\\HWMyMenu\\App\\Services\\": "app/services"
+        }
+    },
+    "authors": [
+        {
+            "name": "Soczó Kristóf",
+            "email": "lonsdale201@hotmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "config": {
+        "allow-plugins": {
+            "composer/installers": false,
+            "automattic/jetpack-autoloader": false
+        }
+    }
+}

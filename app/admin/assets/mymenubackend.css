@@ -1,0 +1,8 @@
+.description-wide .select2-container .select2-selection--multiple .select2-selection__rendered {
+    white-space: wrap;
+}
+
+.description-wide .select2-container .select2-search--inline {
+    float: none;
+
+}

@@ -1,0 +1,265 @@
+/* CSS Variables */
+:root {
+    --dark-primary-bg: #0f0f10;
+    --dark-secondary-bg: #1b1e21;
+    --dark-primary-color: #ffffff;
+    --dark-secondary-color: #0f0f10;
+    --dark-accent-color: #E53935;
+    --dark-success-color: #388E3C;
+
+    --light-primary-bg: #ffffff;
+    --light-secondary-bg: #F3F3F4;
+    --light-primary-color: #747579;
+    --light-secondary-color: #0f0f10;
+    --light-accent-color: #E53935;
+    --light-success-color: #388E3C;
+
+    --font-family-primary: inherit;
+    --font-size-base: 1rem;
+    --font-size-small: 0.813rem;
+    --font-size-extrasmall: 0.55rem;
+    --font-size-large: 1.2rem;
+
+    --icon--space: 3px;
+}
+
+/* General Styles */
+.profile-dropdown-wrapper {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.menu-item i {
+    margin-right: var(--icon--space);
+}
+
+.menu-user-menu-container .menu-item {
+    cursor: default;
+}
+
+.user-nickname {
+    margin-right: .1rem;
+    vertical-align: middle;
+    font-weight: 600;
+    font-family: var(--font-family-primary);
+    font-size: clamp(0.9rem, 1vw, var(--font-size-base));
+    color: var(--dark-secondary-color);
+}
+
+.dropdown-arrow {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid var(--dark-secondary-color);
+    margin-top: 0.1rem;
+    margin-right: 0.25rem;
+}
+
+.user-monogram {
+    width: 2.1rem;
+    height: 2.1rem;
+    background-color: var(--dark-accent-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dark-primary-color);
+    font-size: var(--font-size-base);
+    font-family: var(--font-family-primary);
+    text-transform: uppercase;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 376px) {
+    .user-monogram {
+        width: 1.85rem;
+        height: 1.85rem;
+    }
+}
+
+.dropdown-content {
+    display: none;
+    background-color: var(--dark-primary-bg);
+    color: var(--dark-primary-color);
+    width: 18rem;
+    position: absolute;
+    opacity: 0;
+    top: calc(100% + 0.5rem);
+    transform: translateY(0.5rem) translateX(-50%);
+    left: 50%;
+    z-index: 1000;
+    box-shadow: 0px 0px 2rem rgba(0, 0, 0, 0.2);
+    border-radius: 0.5rem;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown-menu-content {
+    padding: 1rem;
+}
+
+.dropdown-content a {
+    color: var(--dark-primary-color);
+    text-transform: uppercase;
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.dropdown-content a:hover,
+.dropdown-content a:focus {
+    color: var(--dark-accent-color);
+}
+
+.dropdown-content .menu-item i:focus {
+    color: var(--dark-accent-color);
+}
+
+.dropdown-content a:hover+i,
+.dropdown-content a:focus+i {
+    color: var(--dark-accent-color);
+}
+
+.dropdown-content i:hover+a,
+.dropdown-content i:focus+a {
+    color: var(--dark-accent-color);
+}
+
+
+.current-menu-item a {
+    color: var(--dark-accent-color);
+}
+
+.dropdown-menu-content ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0 .1rem;
+}
+
+.dropdown-menu-content ul li:not(:last-child) {
+    margin-bottom: 0.5rem;
+}
+
+.dropdown-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid var(--dark-secondary-bg);
+    background-color: var(--dark-secondary-bg);
+}
+
+.header-monogram {
+    width: 2.2rem;
+    height: 2.2rem;
+    background-color: var(--dark-accent-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dark-primary-color);
+    font-size: var(--font-size-base);
+    font-family: var(--font-family-primary);
+    text-transform: uppercase;
+    border-radius: 50%;
+    font-weight: bold;
+    margin-right: 0.6rem;
+}
+
+.header-active-sub {
+    color: var(--dark-success-color);
+    font-size: var(--font-size-extrasmall);
+    font-weight: 600;
+    margin-left: auto;
+    padding: 0 0.5rem;
+    background-color: var(--dark-primary-bg);
+    border: 1px solid var(--dark-success-color);
+    border-radius: 0.2rem;
+    text-transform: uppercase;
+    line-height: 1.5;
+}
+
+.hw-theme-light .header-active-sub {
+    color: var(--light-success-color);
+    background-color: var(--light-primary-bg);
+    border: 1px solid var(--light-success-color);
+}
+
+
+.header-user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.header-nickname {
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    color: var(--dark-primary-color);
+}
+
+.header-username {
+    font-weight: 400;
+    margin-top: -0.2rem;
+    font-family: var(--font-family-primary);
+    color: var(--dark-primary-color);
+    font-size: var(--font-size-small);
+    font-style: italic;
+}
+
+/* Light Theme */
+.hw-theme-light .profile-dropdown-wrapper,
+.hw-theme-light .dropdown-content {
+    background-color: var(--light-primary-bg);
+    color: var(--light-primary-color);
+}
+
+.hw-theme-light .user-nickname,
+.hw-theme-light .dropdown-arrow,
+.hw-theme-light .header-nickname,
+.hw-theme-light .header-username {
+    color: var(--light-secondary-color);
+}
+
+.hw-theme-light .dropdown-arrow {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid var(--light-secondary-color);
+}
+
+.hw-theme-light .header-monogram {
+    background-color: var(--light-accent-color);
+}
+
+.hw-theme-light .dropdown-header {
+    background-color: var(--light-secondary-bg);
+}
+
+.hw-theme-light .dropdown-content a {
+    color: var(--light-primary-color);
+}
+
+.hw-theme-light .dropdown-content a:hover,
+.hw-theme-light .dropdown-content a:focus {
+    color: var(--light-accent-color);
+}
+
+.hw-mbadge {
+    display: inline;
+    background-color: var(--dark-accent-color);
+    color: var(--dark-primary-color);
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 0.2rem 0.2rem;
+    border-radius: 0.25rem;
+    margin-left: 5px;
+    margin-right: 0;
+    margin-top: -15px;
+    /* left: 5px; */
+    vertical-align: middle;
+    position: relative;
+}
