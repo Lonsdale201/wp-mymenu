@@ -11,7 +11,8 @@ This plugin provides a shortcode, a few tweaks, a monogram creation, and a dropd
 * Third, go to your header (best option to place the shortcode in the header). open your editor, like elementor Brick etc.. Place the following shortcode: **[user_monogram]** use the ** theme="light"** attributum if you would like to make a custom css for specific theme styles. Read below how it work.
 * Done!
 
-![image](https://github.com/Lonsdale201/wp-mymenu/assets/23199033/43d26cda-ac60-4b38-abcd-90e5a74e4106)
+![image](https://github.com/user-attachments/assets/0a0da846-f688-421f-a538-66992beaec97)
+
 
 
 ## HOW IT WORK
