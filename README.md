@@ -1,6 +1,6 @@
 # Simple My menu
 
-A simple plugin that allows you to create and display a dropdown profile menu.
+A simple plugin that allows you to create monograms for the users, create and display a custom account menu, and use some cool other features to extend the other menus like visibility settings, badge, icon etc.
 
 This plugin provides a shortcode, a few tweaks, a monogram creation, and a dropdown menu for logged in users.
 
