@@ -89,6 +89,8 @@ Accessibility
 
 ### V 3.0 - 2024.12.14
 
+**Plugin new name: Simple My menu**
+
 IMPORTANT!
 
 New requirments: Php 8.0
