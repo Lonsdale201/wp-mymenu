@@ -76,14 +76,6 @@ class AdminSettings {
                 [],
                 '1.0.0'
             );
-    
-            wp_enqueue_script(
-                'mymenu-admin-scripts',
-                HWMYMENU_ADMIN_ASSETS . 'mymenuadminscr.js',
-                ['jquery'],
-                '1.0.0',
-                true
-            );
         }
     }
     
