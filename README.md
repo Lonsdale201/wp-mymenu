@@ -87,6 +87,31 @@ Accessibility
 
 ## CHANGELOG
 
+### V 3.1 - 2024.12.16
+
+**New Features**
+
+* Use gravatar instead of Monogram in the Dropdown menu
+* Icon support for the logged in button
+* Menu description support for the dropdown menu
+* Device visibility (use Mobiledetect lib)
+
+**Bugfixes**
+
+* Fixed the missing user membership and user roles settings
+* Logged out text left blank, now no default text is displayed
+* Plugin css file now loads if the shortcode is in use but the user is not logged in
+* Fixed the missing select2 inicialization
+
+ **Improvement**
+
+ * New visual appearance of the wp menu editor, for the new features added by the plugin
+ * css loading priority settinged to 20
+ * Clear function descriptions for settings
+ * UPD to min php 8.0
+
+---
+
 ### V 3.0 - 2024.12.14
 
 **Plugin new name: Simple My menu**
@@ -114,14 +139,15 @@ We’re not stopping here; many exciting plans are in store for this plugin!
 
 Welcome to My Menu, the second member of the Simple plugin family!
 
+---
 
-
- 
 ### V 2.1 - 2024.02.17
 
 * **TWEAK** Code refactored
 * **FIX** Fixed some bugs with the third party settings. (AffiliateWp, Woo Subs, and Woo memberships visibility)
-* **NEW** Plugin added to the updater server. 
+* **NEW** Plugin added to the updater server.
+
+---
 
 ### V 2.0 - 2024.01.31
 
