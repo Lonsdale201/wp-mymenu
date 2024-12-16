@@ -7,6 +7,11 @@ namespace Composer\Autoload;
 class ComposerStaticInite3be7e7a670dff99d23d94cf3863366f
 {
     public static $prefixLengthsPsr4 = array (
+        'P' => 
+        array (
+            'Psr\\SimpleCache\\' => 16,
+            'Psr\\Cache\\' => 10,
+        ),
         'H' => 
         array (
             'HelloWP\\HWMyMenu\\App\\Services\\' => 30,
@@ -15,9 +20,21 @@ class ComposerStaticInite3be7e7a670dff99d23d94cf3863366f
             'HelloWP\\HWMyMenu\\App\\Admin\\' => 27,
             'HelloWP\\HWMyMenu\\App\\' => 21,
         ),
+        'D' => 
+        array (
+            'Detection\\' => 10,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'Psr\\SimpleCache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/simple-cache/src',
+        ),
+        'Psr\\Cache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/cache/src',
+        ),
         'HelloWP\\HWMyMenu\\App\\Services\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app/services',
@@ -37,6 +54,10 @@ class ComposerStaticInite3be7e7a670dff99d23d94cf3863366f
         'HelloWP\\HWMyMenu\\App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
+        ),
+        'Detection\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mobiledetect/mobiledetectlib/src',
         ),
     );
 

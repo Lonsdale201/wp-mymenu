@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Simple My Menu
  * Description: MyAccount Dropdown menu and some extras.
- * Version: 3.0
+ * Version: 3.1
  * Author: Soczó Kristóf
  * Author URI: https://hellowp.io/hu/
  * Plugin URI: https://github.com/Lonsdale201/wp-mymenu
@@ -31,6 +31,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 require dirname(__FILE__) . '/plugin-update-checker/plugin-update-checker.php';
 
 use YahnisElsts\PluginUpdateChecker\v5p0\PucFactory;
+use HelloWP\HWMyMenu\App\Helper\DeviceDetector;
 
 /**
  * The main class for the My Menu plugin
@@ -42,6 +43,11 @@ final class HWMyMenu {
 
     private static $_instance = null;
 
+    /**
+     * @var \HelloWP\HWMyMenu\App\Helper\DeviceDetector
+     */
+    private static $deviceDetector;
+
     public static function instance() {
         if ( is_null( self::$_instance ) ) {
             self::$_instance = new self();
@@ -51,6 +57,7 @@ final class HWMyMenu {
 
     public function __construct() {
         $this->add_hooks();
+        self::$deviceDetector = new \HelloWP\HWMyMenu\App\Helper\DeviceDetector();
     }
 
     private function add_hooks() {
@@ -73,6 +80,15 @@ final class HWMyMenu {
         return $links;
     }
 
+    /**
+     * Get the DeviceDetector instance
+     *
+     * @return \HelloWP\HWMyMenu\App\Helper\DeviceDetector
+     */
+    public static function getDeviceDetector(): \HelloWP\HWMyMenu\App\Helper\DeviceDetector {
+        return self::$deviceDetector;
+    }
+
     public function on_plugins_loaded() {
         if ( ! $this->is_compatible() ) {
             return;
@@ -80,7 +96,7 @@ final class HWMyMenu {
 
         \HelloWP\HWMyMenu\App\Admin\AdminSettings::get_instance();
         \HelloWP\HWMyMenu\App\Admin\UserMeta::get_instance();
-        \HelloWP\HWMyMenu\App\Admin\MenuExtensions::init();
+        \HelloWP\HWMyMenu\App\Admin\MenuExtensions::get_instance();
         \HelloWP\HWMyMenu\App\Admin\UserBulkActions::init();
         \HelloWP\HWMyMenu\App\Frontend\Monogram::get_instance();
 
@@ -125,3 +141,4 @@ final class HWMyMenu {
 }
 
 HWMyMenu::instance();
+

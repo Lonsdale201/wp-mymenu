@@ -6,9 +6,12 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
+    'Psr\\Cache\\' => array($vendorDir . '/psr/cache/src'),
     'HelloWP\\HWMyMenu\\App\\Services\\' => array($baseDir . '/app/services'),
     'HelloWP\\HWMyMenu\\App\\Helper\\' => array($baseDir . '/app/helper'),
     'HelloWP\\HWMyMenu\\App\\Frontend\\' => array($baseDir . '/app/frontend'),
     'HelloWP\\HWMyMenu\\App\\Admin\\' => array($baseDir . '/app/admin'),
     'HelloWP\\HWMyMenu\\App\\' => array($baseDir . '/app'),
+    'Detection\\' => array($vendorDir . '/mobiledetect/mobiledetectlib/src'),
 );

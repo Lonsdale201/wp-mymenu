@@ -19,8 +19,50 @@
     --font-size-small: 0.813rem;
     --font-size-extrasmall: 0.55rem;
     --font-size-large: 1.2rem;
+    --globalpadding: 8px;
+    --globalradius: 5px;
 
     --icon--space: 3px;
+}
+
+.hw-theme-dark.profile-login-wrapper {
+    background-color: var(--dark-primary-bg);
+    padding: var(--globalpadding);
+    border-radius: var(--globalradius);
+    transition: all .3s ease;
+}
+
+.hw-theme-dark.profile-login-wrapper:hover {
+    background-color: var(--dark-accent-color);
+    border-radius: var(--globalradius);
+}
+
+.hw-theme-dark.profile-login-wrapper a {
+    color: var(--dark-primary-color);
+    display: block;
+    line-height: 1;
+}
+
+.hw-theme-light.profile-login-wrapper {
+    background-color: var(--light-primary-bg);
+    padding: var(--globalpadding);
+    border-radius: var(--globalradius);
+    transition: all .3s ease;
+}
+
+.hw-theme-light.profile-login-wrapper:hover {
+    background-color: var(--light-accent-color);
+    border-radius: var(--globalradius);
+}
+
+.hw-theme-light.profile-login-wrapper:hover a {
+    color: var(--light-primary-bg);
+}
+
+.hw-theme-light.profile-login-wrapper a {
+    color: var(--light-secondary-color);
+    display: block;
+    line-height: 1;
 }
 
 /* General Styles */
@@ -37,6 +79,14 @@
 
 .menu-user-menu-container .menu-item {
     cursor: default;
+    display: block;
+    box-sizing: border-box;
+}
+
+.hw-menu-description {
+    display: block;
+    width: 100%;
+    font-size: var(--font-size-small);
 }
 
 .user-nickname {
@@ -72,6 +122,14 @@
     text-transform: uppercase;
     border-radius: 50%;
     font-weight: bold;
+}
+
+.user-monogram img {
+    border-radius: 50%;
+}
+
+.header-monogram img {
+    border-radius: 50%;
 }
 
 @media screen and (max-width: 376px) {
@@ -146,6 +204,7 @@
 
 .dropdown-header {
     display: flex;
+    cursor: default;
     align-items: center;
     padding: 1rem;
     border-bottom: 1px solid var(--dark-secondary-bg);

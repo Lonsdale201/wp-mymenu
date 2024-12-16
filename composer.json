@@ -3,7 +3,8 @@
     "description": "MyAccount Dropdown menu and some extras.",
     "type": "wordpress-plugin",
     "require": {
-        "php": ">=7.4"
+        "php": ">=8.0",
+        "mobiledetect/mobiledetectlib": "^4.8"
     },
     "autoload": {
         "psr-4": {

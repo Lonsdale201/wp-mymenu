@@ -1,8 +1,97 @@
-.description-wide .select2-container .select2-selection--multiple .select2-selection__rendered {
-    white-space: wrap;
+.hw-mymenu-field .select2-container .select2-selection--multiple .select2-selection__rendered {
+    white-space: normal;
 }
 
-.description-wide .select2-container .select2-search--inline {
+.hw-mymenu-field .select2-container .select2-search--inline {
     float: none;
+}
 
+.hw-mymenu-container {
+    background-color: #f9f9f9;
+    border: 1px solid #e1e1e1;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+.hw-mymenu-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.hw-mymenu-title {
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0 10px;
+    color: #23282d;
+}
+
+.hw-mymenu-separator {
+    flex: 1;
+    height: 1px;
+    background-color: #d1d1d1;
+}
+
+.hw-mymenu-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.hw-mymenu-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.hw-mymenu-field label {
+    font-weight: 500;
+    color: #23282d;
+    font-size: 14px;
+}
+
+.hw-mymenu-field input,
+.hw-mymenu-field select {
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    padding: 8px 10px;
+    font-size: 14px;
+    width: 100%;
+}
+
+.hw-mymenu-field input:focus,
+.hw-mymenu-field select:focus {
+    border-color: #007cba;
+    outline: none;
+    box-shadow: 0 0 3px rgba(0, 123, 186, 0.5);
+}
+
+.hw-mymenu-field .select2-container .select2-selection--single .select2-selection__rendered:focus {
+    border-color: #007cba;
+    outline: none;
+    box-shadow: 0 0 3px rgba(0, 123, 186, 0.5);
+}
+
+.hw-mymenu-description {
+    font-size: 12px;
+    color: #72777c;
+    font-weight: 400;
+}
+
+.hw-mymenu-field input[type="checkbox"],
+.hw-mymenu-field input[type="radio"] {
+    width: auto;
+}
+
+.hw-mymenu-field input[type=checkbox]:checked::before {
+    margin: -.1875rem 0 0 -.25rem;
+    height: 1.1125rem;
+    width: 1.1125rem;
+    line-height: 1;
+    text-align: center;
+    display: contents;
 }

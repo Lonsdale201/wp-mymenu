@@ -12,12 +12,20 @@ if (is_user_logged_in()) {
             <span class="<?php echo esc_attr($theme_class); ?> dropdown-arrow"></span>
         </span>
         <div class="<?php echo esc_attr($theme_class); ?> user-monogram" aria-hidden="true" aria-label="User monogram">
-            <?php echo strtoupper(esc_html($monogram)); ?>
+            <?php if ($use_gravatar && $gravatar_exists): ?>
+                <img src="<?php echo esc_url($gravatar_url); ?>" alt="User Gravatar" class="<?php echo esc_attr($theme_class); ?> gravatar-image" />
+            <?php else: ?>
+                <?php echo strtoupper(esc_html($monogram)); ?>
+            <?php endif; ?>
         </div>
         <div class="<?php echo esc_attr($theme_class); ?> dropdown-content" aria-hidden="true" aria-labelledby="profile-menu">
             <div class="<?php echo esc_attr($theme_class); ?> dropdown-header">
                 <div class="<?php echo esc_attr($theme_class); ?> header-monogram" aria-label="Monogram">
-                    <?php echo strtoupper(esc_html($monogram)); ?>
+                    <?php if ($use_gravatar && $gravatar_exists): ?>
+                        <img src="<?php echo esc_url($gravatar_url); ?>" alt="User Gravatar" class="<?php echo esc_attr($theme_class); ?> gravatar-image" />
+                    <?php else: ?>
+                        <?php echo strtoupper(esc_html($monogram)); ?>
+                    <?php endif; ?>
                 </div>
                 <div class="<?php echo esc_attr($theme_class); ?> header-user-info">
                     <span class="<?php echo esc_attr($theme_class); ?> header-nickname" aria-label="Nickname">
@@ -62,6 +70,9 @@ if (is_user_logged_in()) {
     ?>
     <div class="<?php echo esc_attr($theme_class); ?> profile-login-wrapper">
         <a class="<?php echo esc_attr($theme_class); ?> login-button" href="<?php echo esc_url($redirect_url); ?>" aria-label="Login or register">
+            <?php if (!empty($icon_class)): ?>
+                <i class="<?php echo esc_attr($icon_class); ?>" aria-hidden="true"></i>
+            <?php endif; ?>
             <?php echo esc_html($button_text); ?>
         </a>
     </div>

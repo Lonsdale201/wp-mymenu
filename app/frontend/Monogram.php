@@ -13,11 +13,17 @@ if (!defined('ABSPATH')) {
 class Monogram {
     private static $instance = null;
 
+    /**
+     * Nyomon követjük, hogy egyszer már betöltöttük-e az asset-eket.
+     * A CSS betöltés mindig megtörténik ha a shortcode renderelődik,
+     * a JS viszont csak bejelentkezett felhasználóknál töltődik be.
+     */
     private $assets_enqueued = false;
 
     private function __construct() {
         add_shortcode('user_monogram', [$this, 'render_shortcode']);
-        add_action('wp_enqueue_scripts', [$this, 'enqueue_assets']);
+        // Már nem töltjük be itt a script és stílus regisztrációt, csak regisztrálunk, a beillesztés rendernél történik.
+        add_action('wp_enqueue_scripts', [$this, 'register_assets'], 20);
     }
 
     public static function get_instance() {
@@ -27,22 +33,26 @@ class Monogram {
         return self::$instance;
     }
 
-    public function enqueue_assets() {
-        if (!$this->assets_enqueued) {
-            wp_register_style('hw-my-menu-style', HWMYMENU_FRONTEND_ASSETS . 'my-profile.css', [], '1.0.0');
-            wp_register_script('hw-my-menu-script', HWMYMENU_FRONTEND_ASSETS . 'my-profile.js', ['jquery'], '1.0.0', true);
-        }
+    public function register_assets() {
+        // Itt csak regisztrálunk, de nem enqueue-olunk
+        wp_register_style('hw-my-menu-style', HWMYMENU_FRONTEND_ASSETS . 'my-profile.css', [], '1.0.0');
+        wp_register_script('hw-my-menu-script', HWMYMENU_FRONTEND_ASSETS . 'my-profile.js', ['jquery'], '1.0.0', true);
     }
 
     public function render_shortcode($atts = []) {
-        if (!$this->assets_enqueued) {
-            wp_enqueue_style('hw-my-menu-style');
+        // Ha a shortcode megjelenik, akkor CSS mindenképpen kell:
+        wp_enqueue_style('hw-my-menu-style');
+    
+        // Ha a felhasználó be van jelentkezve, akkor betöltjük a JS-t is
+        if (is_user_logged_in()) {
             wp_enqueue_script('hw-my-menu-script');
-            $this->assets_enqueued = true;
         }
     
+        // Itt jelezzük, hogy az asset-ek már be lettek húzva a shortcode-hoz
+        $this->assets_enqueued = true;
+    
         $atts = shortcode_atts([
-            'theme' => 'dark', // Defa theme
+            'theme' => 'dark', // Alapértelmezett téma
         ], $atts, 'user_monogram');
     
         $theme_class = 'hw-theme-' . sanitize_html_class($atts['theme']);
@@ -51,6 +61,7 @@ class Monogram {
         $monogram = null;
         $display_name = null;
         $active_subs = false; 
+        $use_gravatar = SettingsConfig::get('mymenu_show_gravatar', 'no') === 'yes'; // Gravatar beállítás
     
         if ($user) {
             $monogram = get_user_meta($user->ID, UserMeta::MONOGRAM_META_KEY, true);
@@ -88,9 +99,23 @@ class Monogram {
                     }
                 }
             }
+    
+            // Gravatar 
+            if ($use_gravatar) {
+                $email_hash = md5(strtolower(trim($user->user_email)));
+                $gravatar_url = "https://www.gravatar.com/avatar/$email_hash?d=404";
+    
+                $response = wp_remote_head($gravatar_url);
+                if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200) {
+                    $gravatar_exists = true;
+                } else {
+                    $gravatar_exists = false;
+                }
+            }
         } else {
             $redirect_url = SettingsConfig::get('mymenu_redirect_url', site_url('/login'));
-            $button_text = SettingsConfig::get('mymenu_text_field', 'Login / Register');
+            $button_text = SettingsConfig::get('mymenu_text_field', '');
+            $icon_class = SettingsConfig::get('mymenu_icon_field', ''); 
         }
     
         ob_start();
@@ -98,5 +123,5 @@ class Monogram {
         return ob_get_clean();
     }
     
-    
+
 }

@@ -76,6 +76,14 @@ class AdminSettings {
                 [],
                 '1.0.0'
             );
+             // Betöltjük a JavaScript fájlt
+            wp_enqueue_script(
+                'mymenu-admin-scripts',
+                HWMYMENU_ADMIN_ASSETS . 'mymenuadminscr.js',
+                ['jquery'], // Függőségek
+                '1.0.0', // Verzió
+                true // Footer-be töltsük
+            );
         }
     }
     
@@ -101,6 +109,14 @@ class AdminSettings {
             'mymenu-settings',
             'mymenu_settings_section'
         );
+
+        add_settings_field(
+            'mymenu_show_gravatar',
+            'Show gravatar instead of monogram in the dropdown menu',
+            [$this, 'show_gravatar_callback'],
+            'mymenu-settings',
+            'mymenu_settings_section'
+        );        
 
         add_settings_field(
             'mymenu_dropdown_label',
@@ -137,6 +153,14 @@ class AdminSettings {
             'mymenu-settings',
             'mymenu_settings_section'
         );
+
+        add_settings_field(
+            'mymenu_icon_field',
+            'Logged Out Icon',
+            [$this, 'icon_field_callback'],
+            'mymenu-settings',
+            'mymenu_settings_section'
+        );        
 
         add_settings_field(
             'mymenu_redirect_url',
@@ -179,19 +203,32 @@ class AdminSettings {
     public function monogram_generation_callback() {
         $options = get_option($this->option_key);
         $selected = isset($options['mymenu_monogram_generation']) ? $options['mymenu_monogram_generation'] : 'last_first';
-
+    
         echo '<select name="' . $this->option_key . '[mymenu_monogram_generation]">
             <option value="email" ' . selected($selected, 'email', false) . '>Email (first-last letter)</option>
             <option value="first_last" ' . selected($selected, 'first_last', false) . '>First name Last name (first-last letter)</option>
             <option value="last_first" ' . selected($selected, 'last_first', false) . '>Last name First name (first-last letter)</option>
             <option value="nickname" ' . selected($selected, 'nice_name', false) . '>Nickname (first-last letter)</option>
         </select>';
+        echo '<p class="description">Here you can define how the system generates the monogram, which consists of two letters. If you change this setting, the system will automatically update it for users upon their next login. You can also regenerate the monogram manually.</p>';
     }
+    
+    public function show_gravatar_callback() {
+        $options = get_option($this->option_key);
+        $selected = isset($options['mymenu_show_gravatar']) ? $options['mymenu_show_gravatar'] : 'no';
+    
+        echo '<select name="' . $this->option_key . '[mymenu_show_gravatar]">
+            <option value="no" ' . selected($selected, 'no', false) . '>No</option>
+            <option value="yes" ' . selected($selected, 'yes', false) . '>Yes</option>
+        </select>';
+        echo '<p class="description">You can display the user\'s gravatar instead of the monogram in the dropdown menu. If no gravatar is available, the system will automatically fall back to displaying the monogram.</p>';
+    }
+    
 
-     public function dropdown_label_callback() {
+    public function dropdown_label_callback() {
         $options = get_option($this->option_key);
         $selected = isset($options['mymenu_dropdown_label']) ? $options['mymenu_dropdown_label'] : 'nickname';
-
+    
         echo '<select name="' . $this->option_key . '[mymenu_dropdown_label]" id="mymenu_dropdown_label">
             <option value="nickname" ' . selected($selected, 'nickname', false) . '>Nickname</option>
             <option value="first_name" ' . selected($selected, 'first_name', false) . '>First name</option>
@@ -199,7 +236,9 @@ class AdminSettings {
             <option value="email" ' . selected($selected, 'email', false) . '>Email (before @)</option>
             <option value="custom" ' . selected($selected, 'custom', false) . '>Custom text</option>
         </select>';
+        echo '<p class="description">Leave it empty if you don\'t want to display text. (The dropdown arrow and monogram will still appear.)</p>';
     }
+    
 
     public function custom_label_callback() {
         $options = get_option($this->option_key);
@@ -213,7 +252,17 @@ class AdminSettings {
         $options = get_option($this->option_key);
         $value = isset($options['mymenu_text_field']) ? $options['mymenu_text_field'] : '';
         echo '<input type="text" name="' . $this->option_key . '[mymenu_text_field]" value="' . esc_attr($value) . '" />';
+        echo '<p class="description">Leave it empty if you don\'t want to display text. If you set an icon, it will still appear.</p>';
     }
+    
+
+    public function icon_field_callback() {
+        $options = get_option($this->option_key);
+        $icon_class = isset($options['mymenu_icon_field']) ? $options['mymenu_icon_field'] : '';
+        echo '<input type="text" name="' . $this->option_key . '[mymenu_icon_field]" value="' . esc_attr($icon_class) . '" class="regular-text" />';
+        echo '<p class="description">Enter the icon class (e.g., "fa fa-home"). Leave empty for no icon.</p>';
+    }
+    
 
     public function redirect_url_field_callback() {
         $options = get_option($this->option_key);
@@ -260,9 +309,11 @@ class AdminSettings {
     public function sanitize_settings($input) {
         $sanitized = [];
         $sanitized['mymenu_monogram_generation'] = isset($input['mymenu_monogram_generation']) ? sanitize_text_field($input['mymenu_monogram_generation']) : 'last_first';
+        $sanitized['mymenu_show_gravatar'] = isset($input['mymenu_show_gravatar']) ? sanitize_text_field($input['mymenu_show_gravatar']) : 'no';
         $sanitized['mymenu_dropdown_label'] = isset($input['mymenu_dropdown_label']) ? sanitize_text_field($input['mymenu_dropdown_label']) : 'nickname';
         $sanitized['mymenu_custom_label'] = isset($input['mymenu_custom_label']) ? sanitize_text_field($input['mymenu_custom_label']) : '';
         $sanitized['mymenu_text_field'] = isset($input['mymenu_text_field']) ? sanitize_text_field($input['mymenu_text_field']) : '';
+        $sanitized['mymenu_icon_field'] = isset($input['mymenu_icon_field']) ? sanitize_text_field($input['mymenu_icon_field']) : '';
         $sanitized['mymenu_redirect_url'] = isset($input['mymenu_redirect_url']) ? esc_url_raw($input['mymenu_redirect_url']) : '';
         $sanitized['mymenu_enable_icon_menu'] = isset($input['mymenu_enable_icon_menu']) ? (bool) $input['mymenu_enable_icon_menu'] : false;
         $sanitized['mymenu_before_dropdown_content'] = isset($input['mymenu_before_dropdown_content']) ? wp_kses_post($input['mymenu_before_dropdown_content']) : '';
