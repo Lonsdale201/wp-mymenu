@@ -188,9 +188,15 @@
 }
 
 
-.current-menu-item a {
+
+.hw-theme-light .menu-mymenu-container ul li.current-menu-item a {
     color: var(--dark-accent-color);
 }
+
+.menu-mymenu-container ul li.current-menu-item a {
+    color: var(--dark-primary-color);
+}
+
 
 .dropdown-menu-content ul {
     list-style-type: none;

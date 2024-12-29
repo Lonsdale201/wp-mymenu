@@ -32,4 +32,13 @@ class Dependency {
     public static function is_woocommerce_membership_active() {
         return function_exists('wc_memberships');
     }
+
+    /**
+     * Check if Woo loyality active
+     *
+     * @return bool True if Simple loyality is active, false otherwise.
+     */
+    public static function is_simple_loyalty_active() {
+        return class_exists('HelloWP\HWLoyalty\HWLoyalty');
+    }
 }

@@ -128,6 +128,16 @@ class MenuExtensions {
             echo '</label>';
             echo '</div>';
         }
+
+        if (Dependency::is_simple_loyalty_active()) {
+            $loyalty_only = get_post_meta($item_id, '_mpm_loyalty_only', true);
+            echo '<div class="hw-mymenu-field">';
+            echo '<label for="edit-menu-item-loyalty-only-' . esc_attr($item_id) . '">';
+            echo '<input type="checkbox" id="edit-menu-item-loyalty-only-' . esc_attr($item_id) . '" name="menu-item-loyalty-only[' . esc_attr($item_id) . ']" ' . checked($loyalty_only, 'yes', false) . ' />';
+            echo __('User is a Loyalty Member', 'my-profile-menu');
+            echo '</label>';
+            echo '</div>';
+        }
     
         // Icon Field
         $enable_icon_menu = SettingsConfig::get('mymenu_enable_icon_menu', false);
@@ -230,6 +240,11 @@ class MenuExtensions {
         } else {
             delete_post_meta($menu_item_db_id, '_mpm_menu_icon');
         }
+
+        if (Dependency::is_simple_loyalty_active()) {
+            $loyalty_only = isset($_POST['menu-item-loyalty-only'][$menu_item_db_id]) ? 'yes' : 'no';
+            update_post_meta($menu_item_db_id, '_mpm_loyalty_only', $loyalty_only);
+        }
         
 
         if (isset($_POST['menu-item-role'][$menu_item_db_id])) {
@@ -307,11 +322,21 @@ class MenuExtensions {
         $user = wp_get_current_user();
         $is_affiliate = $this->is_affiliatewp_active() && affwp_is_affiliate($user->ID);
         $deviceDetector = \HelloWP\HWMyMenu\HWMyMenu::getDeviceDetector();
+
+        $is_loyalty_active = Dependency::is_simple_loyalty_active();
+        $is_loyalty_member = $is_loyalty_active && \HelloWP\HWLoyalty\App\Modules\LoyaltyDiscount::is_loyalty_member($user->ID);
+
     
         foreach ($menu_items as $key => $menu_item) {
             $meta = $menu_item_metas[$menu_item->ID] ?? null;
+            $loyalty_only = get_post_meta($menu_item->ID, '_mpm_loyalty_only', true);
             if (!$meta) {
                 continue;
+            }
+
+            // simple loyalty
+            if ($loyalty_only === 'yes' && !$is_loyalty_member) {
+                unset($menu_items[$key]);
             }
     
             // AffiliateWP 

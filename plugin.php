@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Simple My Menu
  * Description: MyAccount Dropdown menu and some extras.
- * Version: 3.1
+ * Version: 3.2
  * Author: Soczó Kristóf
  * Author URI: https://hellowp.io/hu/
  * Plugin URI: https://github.com/Lonsdale201/wp-mymenu
