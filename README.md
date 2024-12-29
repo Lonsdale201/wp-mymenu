@@ -41,6 +41,7 @@ For menus, you can specify the following options for each menu item, not just th
 * Woo Membership
 * Woo Subscriptions
 * AffiliateWP
+* Simple Loyalty Program
 
 ## For Developers
 
@@ -86,6 +87,13 @@ Accessibility
 - [X] Monogram regeneration manually
 
 ## CHANGELOG
+
+### V 3.2 - 2024.12.29
+
+**New features**
+
+*New menu setting - if user is Simple Loyalty Program Member ([plugin: Simple Loyalty Program](https://github.com/Lonsdale201/Simple-Loyalty-Program))
+
 
 ### V 3.1 - 2024.12.16
 
