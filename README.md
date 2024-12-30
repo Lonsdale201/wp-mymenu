@@ -13,6 +13,11 @@ This plugin provides a shortcode, a few tweaks, a monogram creation, and a dropd
 
 ![image](https://github.com/user-attachments/assets/0a0da846-f688-421f-a538-66992beaec97)
 
+**Menu Conditions:**
+
+![image](https://github.com/user-attachments/assets/92a5fec5-7d7b-436d-a2f7-4b06256f5c48)
+
+
 
 
 ## HOW IT WORK
@@ -92,8 +97,9 @@ Accessibility
 
 **New features**
 
-*New menu setting - if user is Simple Loyalty Program Member ([plugin: Simple Loyalty Program](https://github.com/Lonsdale201/Simple-Loyalty-Program))
+* New menu setting - if user is Simple Loyalty Program Member ([plugin: Simple Loyalty Program](https://github.com/Lonsdale201/Simple-Loyalty-Program))
 
+---
 
 ### V 3.1 - 2024.12.16
 
